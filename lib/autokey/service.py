@@ -37,6 +37,7 @@ from autokey.macro import MacroManager
 import autokey.scripting
 from autokey.configmanager.configmanager import ConfigManager, save_config
 import autokey.configmanager.configmanager_constants as cm_constants
+from autokey.scripting.system import System
 
 logger = __import__("autokey.logger").logger.get_logger(__name__)
 MAX_STACK_LENGTH = 150
@@ -100,10 +101,12 @@ class Service:
 
     def unpause(self):
         ConfigManager.SETTINGS[cm_constants.SERVICE_RUNNING] = True
+        System.exec_command('notify-send "AutoKey resumed."', getOutput=False)
         logger.info("Unpausing - service now marked as running")
 
     def pause(self):
         ConfigManager.SETTINGS[cm_constants.SERVICE_RUNNING] = False
+        System.exec_command('notify-send "AutoKey paused."', getOutput=False)
         logger.info("Pausing - service now marked as stopped")
 
     def is_running(self):
