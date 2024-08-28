@@ -101,12 +101,12 @@ class Service:
 
     def unpause(self):
         ConfigManager.SETTINGS[cm_constants.SERVICE_RUNNING] = True
-        System.exec_command('notify-send "AutoKey resumed."', getOutput=False)
+        System.exec_command('notify-send2 "AutoKey RESUMED."', getOutput=False)
         logger.info("Unpausing - service now marked as running")
 
     def pause(self):
         ConfigManager.SETTINGS[cm_constants.SERVICE_RUNNING] = False
-        System.exec_command('notify-send "AutoKey paused."', getOutput=False)
+        System.exec_command('notify-send2 "AutoKey PAUSED."', getOutput=False)
         logger.info("Pausing - service now marked as stopped")
 
     def is_running(self):

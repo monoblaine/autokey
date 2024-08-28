@@ -1,0 +1,6 @@
+#!/bin/bash
+
+message=$1
+nid="$(<~/.last_notification_id)"
+nid=$(notify-send -p -r $nid "$message")
+echo $nid > ~/.last_notification_id
