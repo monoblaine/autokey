@@ -46,6 +46,11 @@ def generate_argument_parser():
                             const="folder",
                             dest="mode",
                             help="Show a folder popup menu")
+    mode_group.add_argument("-S", "--status",
+                            action="store_const",
+                            const="service_status",
+                            dest="mode",
+                            help="Show service status")
     argument_parser.add_argument("name",
                                  help="The name of the script, phrase or folder.")
     return argument_parser
@@ -64,18 +69,25 @@ if __name__ == "__main__":
         print(str(e), file=sys.stderr)
         sys.exit(1)
 
+    is_service_status = False
+
     if arguments.mode == "script":
         dbus_function = dbus_service.run_script
     elif arguments.mode == "phrase":
         dbus_function = dbus_service.run_phrase
     elif arguments.mode == "folder":
         dbus_function = dbus_service.run_folder
+    elif arguments.mode == "service_status":
+        is_service_status = True
+        dbus_function = dbus_service.service_status
     else:
         print("BUG: Unknown run mode encountered: {}".format(arguments.mode), file=sys.stderr)
         sys.exit(1)
 
     try:
-        dbus_function(arguments.name, dbus_interface="org.autokey.Service")
+        maybe_status = dbus_function(arguments.name, dbus_interface="org.autokey.Service")
+        if is_service_status:
+            print(maybe_status)
     except dbus.DBusException as e:
         print(e.get_dbus_message(), file=sys.stderr)
         sys.exit(1)

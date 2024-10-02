@@ -53,3 +53,7 @@ class AppService(dbus.service.Object):
     @dbus.service.method(dbus_interface='org.autokey.Service', in_signature='', out_signature='')
     def unpause_service(self):
         self.app.unpause_service()
+
+    @dbus.service.method(dbus_interface='org.autokey.Service', in_signature='s', out_signature='s')
+    def service_status(self, name):
+        return self.app.service_status()

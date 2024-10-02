@@ -160,6 +160,12 @@ class Application:
         self.service.pause()
         self.notifier.update_tool_tip()
 
+    def service_status(self):
+        if self.service.is_running():
+            return "running"
+        else:
+            return "paused"
+
     def toggle_service(self):
         """
         Convenience method for toggling the expansion service on or off.
