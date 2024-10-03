@@ -51,6 +51,11 @@ def generate_argument_parser():
                             const="service_status",
                             dest="mode",
                             help="Show service status")
+    mode_group.add_argument("-T", "--toggle-service",
+                            action="store_const",
+                            const="toggle_service",
+                            dest="mode",
+                            help="Toggle service status")
     argument_parser.add_argument("name",
                                  help="The name of the script, phrase or folder.")
     return argument_parser
@@ -80,6 +85,8 @@ if __name__ == "__main__":
     elif arguments.mode == "service_status":
         is_service_status = True
         dbus_function = dbus_service.service_status
+    elif arguments.mode == "toggle_service":
+        dbus_function = dbus_service.toggle_service
     else:
         print("BUG: Unknown run mode encountered: {}".format(arguments.mode), file=sys.stderr)
         sys.exit(1)

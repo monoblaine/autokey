@@ -57,3 +57,7 @@ class AppService(dbus.service.Object):
     @dbus.service.method(dbus_interface='org.autokey.Service', in_signature='s', out_signature='s')
     def service_status(self, _):
         return self.app.service_status()
+
+    @dbus.service.method(dbus_interface='org.autokey.Service', in_signature='s', out_signature='')
+    def toggle_service(self, _):
+        self.app.toggle_service()
